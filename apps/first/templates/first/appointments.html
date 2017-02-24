@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Appointments</title>
+	{% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{%static 'first/basic2.css' %}">
+</head>
+<body>
+	<div id="webber">
+		<h1>Hello {{request.session.user_id}}</h1>
+		<a href="/">Log Out</a>
+		<div id="today">
+			<h3>Here are your appointments for today</h3>
+			<table>
+				<thead>
+					<tr>
+						<th>Task</th>
+						<th>Date</th>
+						<th>Time</th>
+						<th>Status</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for task in today %}
+					<tr>
+						<td>{{task.task}}</td>
+						<td>{{task.date}}</td>
+						<td>{{task.time}}</td>
+						<td>{{task.status}}</td>
+						<td><a href="/appointments/{{task.id}}"> Edit </a></td>
+						<td><a href="/delete/{{task.id}}"> Delete </a></td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<div id="others">
+			<h3>Here are your upcoming appointments</h3>
+			<table>
+				<thead>
+					<tr>
+						<th>Task</th>
+						<th>Date</th>
+						<th>Time</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for task in tasks %}
+					<tr>
+						<td>{{task.task}}</td>
+						<td>{{task.date}}</td>
+						<td>{{task.time}}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		<div>
+			{% for message in messages %}
+				{{message}}
+			{% endfor %}
+		</div>
+		</div>
+		<div id="add">
+			<form action="/add" method="POST">
+				{% csrf_token %}
+				<div>
+					<label>Date:</label>
+					<input type="date" name="date">
+				</div>
+				<div>
+					<label>Time:</label>
+					<input type="time" name="time">
+				</div>
+				<div>
+					<label>Task:</label>
+					<input type="text" name="task">
+				</div>
+					<input type="submit" value="Add Appointment">
+			</form>
+		</div>
+	</div>
+</body>
+</html>

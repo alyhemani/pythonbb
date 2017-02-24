@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Update Entry</title>
+</head>
+<body>
+	<a href="/appointments">Dashboard</a>
+	<a href="/">Log Out</a>
+	<form action="/update/{{task.id}}" method="POST">
+	{% csrf_token %}
+	{% for message in messages %}
+		{{message}}
+	{% endfor %}
+		<div>
+			<label>Task:</label>
+			<input type="text" name="task" value={{task.task}}>
+		</div>
+		<div>
+			<label>Status:</label>
+			<select name="status">
+				<option>Done</option>
+				<option>Pending</option>
+				<option>Missed</option>
+			</select>
+		</div>
+		<div>
+			<label>Date:</label>
+			<input type="date" name="date" value={{task.date}}>
+		</div>
+		<div>
+			<label>Time:</label>
+			<input type="time" name="time" value={{task.time}}>
+		</div>
+		<input type="submit" value="Update">
+	</form>
+</body>
+</html>
